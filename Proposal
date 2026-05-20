@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Jwngthima</title>
+    <style>
+        /* Romantic background with soft colors */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffb3c6 50%, #ff85a1 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating heart elements */
+        .heart-bg {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 75, 110, 0.3);
+            animation: float Up 6s linear infinite;
+            bottom: -50px;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Proposal Card Containers */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            z-index: 10;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* Styled Heading matching your request */
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        /* Layout for the buttons */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            height: 60px;
+            position: relative;
+            align-items: center;
+        }
+
+        /* Shared button styling */
+        .btn {
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Yes button styling */
+        #yesBtn {
+            background-color: #ff4b6e;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 75, 110, 0.4);
+        }
+
+        /* No button styling (Absolute for movement tracking) */
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            position: absolute;
+            left: 55%;
+            white-space: nowrap;
+        }
+
+        /* Success screen configuration */
+        .hidden {
+            display: none !important;
+        }
+
+        .celebration {
+            font-size: 1.5rem;
+            color: #d90429;
+            animation: popIn 0.5s ease-out forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Proposal Screen -->
+    <div class="container" id="proposalBox">
+        <h1><u><i>will you marry me Jwngthima?</i></u> 😍😍</h1>
+        <div class="btn-group">
+            <button class="btn" id="yesBtn" onclick="acceptProposal()">Yes!</button>
+            <button class="btn" id="noBtn" onmouseover="teleportBtn(this)" onclick="teleportBtn(this)">No</button>
+        </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div class="container hidden" id="happyBox">
+        <div class="celebration">
+            <h1>YAY! ❤️🎉</h1>
+            <p>I love you forever! 💍✨</p>
+            <div style="font-size: 80px; margin-top: 20px;">🥰💖👩‍❤️‍👨</div>
+        </div>
+    </div>
+
+    <script>
+        // Make the "No" button move away smoothly
+        function teleportBtn(button) {
+            // Get available window boundaries safely
+            const padding = 100;
+            const maxX = window.innerWidth - button.offsetWidth - padding;
+            const maxY = window.innerHeight - button.offsetHeight - padding;
+
+            // Generate completely random x and y coordinates
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            // Force fixed positioning to break out of layout container
+            button.style.position = 'fixed';
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+        }
+
+        // Handle the "Yes" button click event
+        function acceptProposal() {
+            document.getElementById('proposalBox').classList.add('hidden');
+            document.getElementById('happyBox').classList.remove('hidden');
+            createConfetti();
+        }
+
+        // Generate ambient romantic background hearts
+        function createBackgroundHearts() {
+            const heartCount = 15;
+            for(let i=0; i<heartCount; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-bg';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    document.body.appendChild(heart);
+                    
+                    // Continuously regenerate heart elements
+                    setInterval(() => {
+                        heart.style.left = Math.random() * 100 + 'vw';
+                    }, 7000);
+                }, i * 400);
+            }
+        }
+
+        // Extra celebratory hearts when Yes is clicked
+        function createConfetti() {
+            for(let i=0; i<50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                heart.style.color = 'rgba(255,0,0,0.7)';
+                document.body.appendChild(heart);
+            }
+        }
+
+        // Initialize background animations on page load
+        createBackgroundHearts();
+    </script>
+</body>
+</html>
